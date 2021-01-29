@@ -5,6 +5,9 @@ categories:
   - Page
   - Tag
   - Uncategorized
+sidebar: sidebar
+permalink: sidebar.html
+layout: home
 last_modified_at: 2018-02-19T08:06:00-05:00
 ---
 
