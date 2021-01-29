@@ -2,7 +2,9 @@
 title:  "Hello World !"
 search: false
 categories: 
-  - Pages
+  - Page
+  - Tag
+  - Uncategorized
 last_modified_at: 2018-02-19T08:06:00-05:00
 ---
 
@@ -17,3 +19,4 @@ last_modified_at: 2018-02-19T08:06:00-05:00
 
 
 꾸준히 할 거라는 보장은 없지만 최대한 무언가를 남기려 노력해야겠다.
+
