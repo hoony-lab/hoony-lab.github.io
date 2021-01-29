@@ -1,12 +1,12 @@
 # main links
 main:
   - title: "About Me"
-    url: https://hoony-lab.github.io/minimal-mistakes/about/
+    url: https://hoony-lab.github.io/about/
   - title: "Posts"
-    url: /posts/
+    url: https://hoony-lab.github.io/posts/
   - title: "Categories"
-    url: /categories/
+    url: https://hoony-lab.github.io/categories/
   - title: "Pages"
-    url: /pages/
+    url: https://hoony-lab.github.io/pages/
   - title: "External Link"
     url: http://thunder-zeus.cf
