@@ -3,8 +3,6 @@ title:  "Hello World !"
 search: false
 categories: 
   - Page
-  - Tag
-  - Uncategorized
 sidebar: sidebar
 permalink: sidebar.html
 layout: home
