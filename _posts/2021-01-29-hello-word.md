@@ -2,7 +2,10 @@
 title:  "Hello World !"
 search: false
 categories: 
-  - Page
+  - Pages
+tags:
+  - hello
+  - world
 sidebar: sidebar
 permalink: sidebar.html
 layout: home
