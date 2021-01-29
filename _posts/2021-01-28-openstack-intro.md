@@ -6,8 +6,18 @@ categories:
 tags:
   - openstack
   - 오픈스택
-last_modified_at: 2018-02-19T08:06:00-05:00
+classes:
+  - wide
+last_modified_at: 
 ---
+
+
+
+###### Openstack은 퍼블릭 클라우드?
+
+
+
+[TOC]
 
 
 
