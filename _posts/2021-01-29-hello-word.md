@@ -6,6 +6,7 @@ categories:
 tags:
   - hello
   - world
+permalink: /pages/
 last_modified: 2018-02-19T08:06:00-05:00
 ---
 

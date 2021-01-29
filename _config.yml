@@ -28,7 +28,7 @@ teaser                   : # path of fallback teaser image, e.g. "/assets/images
 logo                     : "/assets/img/zeus_logo.png" # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 # breadcrumbs            : false # true, false (default)
-words_per_minute         : 250 # default 200
+words_per_minute         : 150 # default 200
 comments:
   provider               : # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "custom"
   disqus:
@@ -274,6 +274,8 @@ defaults:
       path: ""
       type: posts
     values:
+      toc : true
+      classes: wide
       layout: single
       show_date: true
       author_profile: true
