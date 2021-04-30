@@ -10,6 +10,10 @@ tags:
 permalink: /posts/template-front-matter
 date: 2020-01-01
 last_modified_at: 2020-01-02
+
+foo: '{'
+bar: '}'
+some_variable: haha
 ---
 
 
@@ -18,20 +22,26 @@ last_modified_at: 2020-01-02
 
 -----
 
-```"{"{ page.title }}```
+```{{{page.foo}} page.title }}```
 
 {{ page.title }}
 
 -----
 
-```"{"{ page.description }}```
+```{{{page.foo}} page.description }}```
 
 {{ page.description }}
 
 -----
 
-```"{"{ "now" | date: "%Y-%m-%d %H:%M" }}```
+```{{{page.foo}} "now" | date: "%Y-%m-%d %H:%M" }}```
 
 {{ "now" | date: "%Y-%m-%d %H:%M" }}
+
+-----
+
+```{{{page.foo}} page.some_variable }}```
+
+{{ page.some_variable }}
 
 -----
