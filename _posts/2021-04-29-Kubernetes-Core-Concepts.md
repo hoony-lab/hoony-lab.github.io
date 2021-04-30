@@ -5,8 +5,8 @@ categories:
   - kubernetes
 tags:
   - kubernetes
-permalink: /pages/
-last_modified:
+permalink:
+last_modified: 2021-04-31
 ---
 
 > draft
