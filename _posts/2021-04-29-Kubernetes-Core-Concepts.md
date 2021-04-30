@@ -1,5 +1,6 @@
 ---
 title: Kubernetes - Cluster Architecture
+description:
 search: false
 categories:
   - kubernetes
@@ -9,9 +10,6 @@ permalink:
 date: 2021-04-29
 last_modified_at: 2021-04-29
 ---
-
-
-
 # {{ page.title }}
 
 > 배를 활용한 이해
@@ -179,7 +177,7 @@ _____
 > yaml은 indent(2칸, 4칸)를 잘 해야함
 
 **pod-definition-skeleton-akms.yml**
-```
+```yaml
 apiVersion:
 kind:
 metadata:
@@ -189,7 +187,7 @@ spec:
 ```
 
 **pod-definition.yml**
-```
+```yaml
 apiVersion: v1 / v1 / apps/v1 / apps/v1
 kind: Pod / Service / ReplicaSet / Deployment
 metadata:
@@ -232,7 +230,7 @@ kubectl edit pod redis123   (call running app configuration)
 - before
 
 **rc-definition.yml**
-```
+```yaml
 apiVersion: v1
 kind: ReplicationController
 metadata:
@@ -264,7 +262,7 @@ kubectl get pods
 - after
 
 **replicaset-definition.yml**
-```
+```yaml
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
@@ -306,20 +304,303 @@ kubectl scale --replicas=6 replicaset myapp-replicaset
 
 
 ## Deployments
-내일 ~
+
+deploy app in prod env
+
+- Deployment
+  - ReplicaSet
+    - Pod
+
+
+**deployment-definition.yml**
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+    type: **front-end**
+spec:
+  template:
+  ---                (pod-definition.yml 내용이 들어감)
+    metadata:
+      name: myapp-pod
+      labels:
+    spec:
+      containers:
+        - name:
+          image:
+    ---
+  replicas: 3
+
+  selector:
+    matchLabel:     (수많은 pod 중에서 골라줌)
+      type: **front-end**
+```
 
 
 
 
+## Namespaces
+
+> 집 안에 pod, service, deployment 가 있는 격
+
+
+1. default
+2. kube-system
+3. kube-public
+
+production이 커지면 namespace도 구분을 잘해야ㅐ한다
+4. dev
+- web-pod
+- db-service
+5. prod
+- web-pod
+- db-service
+
+db-service.dev.svc.cluster.local
+<service-name>.<namespace>.<service>.<domain>.<domain>
+
+
+각각의 policy
+- quota 설정
+
+
+```kubectl get pods --namespace=kube-system
+
+kubectl create -f pod-deifinition.yaml
+kubectl create -f pod-deifinition.yaml --namespace=dev
+```
+
+
+**pod-definition-ns.yml**
+```yaml
+apiVersion: v1 / v1 / apps/v1 / apps/v1
+kind: Pod / Service / ReplicaSet / Deployment
+metadata:
+  name: myapp-pod
+  ** namespace: dev **
+  labels:             (tag 같은 labeling)
+    app: myapp
+    type: front-end   
+spec:                 (dictionary 형태)
+  containers:         (list 형태)
+    - name: nginx-container
+      image: nginx
+```
+
+
+**namespace-definition.yml**
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+```
+
+```kubectl create -f namespace-deifinition.yml```
+
+
+```kubectl create namespace dev```
 
 
 
 
+- 기본 namespace 설정
+
+kubectl config set-context $(kubectl config current-context) --namespace=dev
+
+
+
+Resource Quota
+
+**compute-quota-definition.yml**
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-quota
+  namespace: dev
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "4"
+    requests.memory: 5Gi
+    limits.cpu: "10"
+    limits.memory: 10Gi
+```
+
+```
+kubectl create -f compute-quota-definition.yml
+```
 
 
 
 
+## Services
+service enable communication between other components
+- service enable commnunitation to front-end
+- service enable commnunitation to back-end
+
+
+external communication
+- web app in pod.
+
+labtop - 192.180.1.10
+node - 192.168.1.2
+pod - 10.244.0.0
+service - port 30008
+
+```
+curl http://192/169.1.2:30008
+```
+
+Service Types
+1. NodePort : TargetPort on pod > Port on Service > NodePort on node
+  - TargetPort : pod 10.244.0.2:80
+  - Port : 10.106.1.12:80
+  - NodePort : 30000 ~ 32767
+
+**pod-definition.yml**
+```yaml
+labels:
+  ** app: myapp **
+```
+
+**service-nodeport-definition.yml**
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector:
+    ** app: myapp **
+    type: front-end
+```
+
+```
+kubectl create -f service-nodeport-definition.yaml
+kubectl get services
+curl htpp://192.168.0.1:30008
+```
+
+random algorithm  
+session affinity : yes
+
+> 3개의 node가 있을때  
+curl http://192.168.0.2:30008  
+curl http://192.168.0.3:30008  
+curl http://192.168.0.4:30008  
+모두 같은 service를 통하여 라벨링된 앱으로 traffic 전달
+
+
+2. ClusterIP
+
+FE > BE > redis
+
+pod의 ip는 static 하지 않음
+single interface를 만들어 각 pod group에 접근해야함
+
+
+**pod-definition.yml**
+```yaml
+labels:
+  ** app: myapp **
+```
+
+**service-clusterip-definition.yml**
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: back-end
+spec:
+  type: ClusterIP
+  ports:
+    - targetPort: 80
+      port: 80
+  selector:
+    app: myapp
+    type: back-end
+
+```
 
 
 
-.
+3. LoadBalancer
+
+voting-app in 3 pods in 1 deployment
+- node 1
+- node 2
+
+http://example-vote.com
+
+
+result-app 3 pods in 1 deployment
+- node 3
+- node 4  
+  http://example-result.com
+
+
+**service-loadbalancer-definition.yml**
+> aws, azure, gcp (어떤 클라우드는 지원 안할 수도 있음)
+
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: LoadBalancer
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector:
+    app: myapp
+    type: back-end
+
+```
+
+
+
+> ## Imperative vs Declarative
+1. Imperative (명령)
+  - selects each steps
+    - provision VM  
+    - install nginxedit config port 8080  
+    - edit config web path  
+  ```
+  kubectl run --image=nginx nginx
+  kubectl create deployment --image=nginx nginx
+  kubectl expose pod nginx --port 80
+  kubectl expose deployment nginx --port 80
+  kubectl scale deployment nginx --replicas=5
+  kubectl set image deployment nginx nginx=nginx:1.18
+  kubectl create/replace/delete -f nginx.yaml
+  kubectl run nginx --image=nginx --dry-run=client -o yaml > some_yaml.yaml
+  ```
+  ```
+  kubectl edit deployment nginx
+  kubectl replace -f nginx.yaml
+  kubectl replace --force -f nginx.yaml
+  ```
+2. Declarative (manifest.yaml)
+  VM name: web  
+  Database: nginx  
+  Port: 8080  
+  Path: /var/www/nginx  
+  Code: GIT Repo - X  
+```
+kubectl apply -f nginx.yaml     (nginx.yaml.isempty() ? create : update)
+```
+> ## Kubectl apply
+asd
