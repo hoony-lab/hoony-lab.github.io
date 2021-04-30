@@ -1,14 +1,14 @@
 ---
-title:  "Openstack 이란?"
+title:  Openstack 이란?
 search: false
-categories: 
+categories:
   - IT
 tags:
   - openstack
   - 오픈스택
 classes:
   - wide
-last_modified_at: 
+last_modified_at:
 ---
 
 
@@ -33,9 +33,9 @@ last_modified_at:
 
  Openstack은 수많은 컴포넌트의 조합으로 구성할 수 있습니다. 업무에 따라서 필요한 컴포넌트들로 환경을 구성할 수 있습니다.
 
- 
 
-Openstack Services: Compute, Hardware Lifecycle, Storage, Networking, Shard Services, Orchestration, Workload Provisioning, Application Lifecycle, API Proxies, Web Frontend. 
+
+Openstack Services: Compute, Hardware Lifecycle, Storage, Networking, Shard Services, Orchestration, Workload Provisioning, Application Lifecycle, API Proxies, Web Frontend.
 
 Operation Tooling: Monitoring services, Resource optimization, Billing / Business Loginc, Testing/ Benchmark
 
