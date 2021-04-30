@@ -2,16 +2,16 @@
 title: Kubernetes - Cluster Architecture
 search: false
 categories:
-  - Kubernetes
+  - kubernetes
 tags:
-  - Kubernetes
-permalink: /pages/kubernetes-core-concepts
+  - kubernetes
+permalink: /pages/
 last_modified:
 ---
 
 > draft
 
-# {{ title }}
+# {{ page.title }}
 
 > 배를 활용한 이해
 
