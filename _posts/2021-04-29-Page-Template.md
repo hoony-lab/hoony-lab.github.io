@@ -22,25 +22,25 @@ some_variable: haha
 
 -----
 
-```{{{page.foo}} page.title }}```
+```{{page.foo}}{{page.foo}} page.title }}```
 
 {{ page.title }}
 
 -----
 
-```{{{page.foo}} page.description }}```
+```{{page.foo}}{{page.foo}} page.description }}```
 
 {{ page.description }}
 
 -----
 
-```{{{page.foo}} "now" | date: "%Y-%m-%d %H:%M" }}```
+```{{page.foo}}{{page.foo}} "now" | date: "%Y-%m-%d %H:%M" }}```
 
 {{ "now" | date: "%Y-%m-%d %H:%M" }}
 
 -----
 
-```{{{page.foo}} page.some_variable }}```
+```{{page.foo}}{{page.foo}} page.some_variable }}```
 
 {{ page.some_variable }}
 
