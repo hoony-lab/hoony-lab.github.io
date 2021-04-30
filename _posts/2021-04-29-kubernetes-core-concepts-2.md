@@ -1,5 +1,5 @@
 ---
-title: Kubernetes - Core Concepts
+title: Kubernetes - Core Concepts 2
 description:
 search: false
 categories:
