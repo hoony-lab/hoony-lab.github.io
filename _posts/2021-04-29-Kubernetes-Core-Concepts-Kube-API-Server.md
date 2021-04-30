@@ -2,10 +2,10 @@
 title: Kubernetes - Kube API Server
 search: false
 categories:
-  - Kubernetes
+  - kubernetes
 tags:
-  - Kubernetes
-permalink: /pages/kubernetes-core-concepts
+  - kubernetes
+permalink: /pages
 last_modified:
 ---
 
