@@ -6,6 +6,7 @@ categories:
 tags:
   - kubernetes
 permalink:
+created: 2021-03-22
 last_modified_at: 2021-04-22
 ---
 
