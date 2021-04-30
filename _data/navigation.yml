@@ -6,6 +6,8 @@ main:
     url: https://hoony-lab.github.io/posts/
   - title: "Categories"
     url: https://hoony-lab.github.io/categories/
+  - title: "Tags"
+    url: https://hoony-lab.github.io/tags/
   - title: "External Link"
     url: http://thunder-zeus.cf
     
