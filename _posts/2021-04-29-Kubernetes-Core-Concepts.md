@@ -5,9 +5,9 @@ categories:
   - kubernetes
 tags:
   - kubernetes
-permalink: /pagess/
-date: 2021-03-22
-last_modified_at: 2021-04-22
+permalink:
+date: 2021-04-29
+last_modified_at: 2021-04-29
 ---
 
 
