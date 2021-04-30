@@ -18,19 +18,19 @@ last_modified_at: 2020-01-02
 
 -----
 
-```"{{ page.title }}"```
+```"{"{ page.title }}```
 
 {{ page.title }}
 
 -----
 
-```"{{ page.description }}"```
+```"{"{ page.description }}```
 
 {{ page.description }}
 
 -----
 
-```"{{ "now" | date: "%Y-%m-%d %H:%M" }}"```
+```"{"{ "now" | date: "%Y-%m-%d %H:%M" }}```
 
 {{ "now" | date: "%Y-%m-%d %H:%M" }}
 
