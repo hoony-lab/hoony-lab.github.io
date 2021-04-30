@@ -6,7 +6,7 @@ categories:
   - kubernetes
 tags:
   - kubernetes
-permalink:
+permalink: /kubernetes/kubernetes-core-concepts
 date: 2021-04-29
 last_modified_at: 2021-04-29
 ---
@@ -367,7 +367,8 @@ db-service.dev.svc.cluster.local
 - quota 설정
 
 
-```kubectl get pods --namespace=kube-system
+```
+kubectl get pods --namespace=kube-system
 
 kubectl create -f pod-deifinition.yaml
 kubectl create -f pod-deifinition.yaml --namespace=dev
@@ -399,10 +400,14 @@ metadata:
   name: dev
 ```
 
-```kubectl create -f namespace-deifinition.yml```
+```
+kubectl create -f namespace-deifinition.yml
+```
 
 
-```kubectl create namespace dev```
+```
+kubectl create namespace dev
+```
 
 
 
