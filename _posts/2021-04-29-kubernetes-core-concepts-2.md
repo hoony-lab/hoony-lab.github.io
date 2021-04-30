@@ -7,8 +7,8 @@ categories:
 tags:
   - kubernetes
 permalink:
-date:
-last_modified_at:
+
+
 ---
 
 
