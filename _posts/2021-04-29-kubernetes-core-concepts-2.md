@@ -134,16 +134,77 @@ controlplane node에 taint가 설정되어서 pod들이 controlplane node 에 �
 
 
 ## Node Selectors
+> set limitation on pods
+
 node 1: size 10
 node 2: size 5
 node 3: size 5
 위와 같은 구성일 때
 
+```
+kubectl label nodes <node-name> <label-key>=<label-value>
+```
+
+```yaml
+pod-nodeselector-definition.yml
+
+...
+spec:
+  containers:
+    - name:
+      image:
+  nodeSelector:
+    ????????????
+```
+
+
 # kubectl explain pod --recursive
 
-## Affinity
+## Node Affinity (친밀감, 관련성)
+
+> pod host on particuler node
+
+```yaml
+pod-nodeselector-definition.yml
+
+...
+spec:
+  containers:
+    - name:
+      image:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:     (라벨이 없으면 안함)
+      preferredDuringSchedulingIgnoredDuringExecution:    (라벨이 없어도 가능)
+      preferredDuringSchedulingRequiredDuringExecution:    (라벨이 없으면 앱 삭제)
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: size
+            operator: In / NotIn / Exists / ...
+            values:
+            - Large
+```
 
 
+
+
+
+
+## Resoruce Requirements and Limits
+
+```yaml
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-limit-range
+spec:
+  limits:
+  - default:
+      cpu: 1
+    defaultRequest:
+      cpu: 0.5
+    type: Container
+```
 
 
 
