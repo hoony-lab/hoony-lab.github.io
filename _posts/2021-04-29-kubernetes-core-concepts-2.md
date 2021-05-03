@@ -211,6 +211,96 @@ spec:
 
 
 
+## DeamonSets
+
+> one pod copy of ALL each node
+
+kube-apiserver에 의해 생성됨
+
+- use case
+  - monitoring agent
+  - kube-proxy
+  - weave-net
+
+```yaml
+daemon-set-definition.yaml (similar to replicaset)
+
+apiVersion: apps/v1
+kind: DeamonSet
+metadata:
+  name: monitoring-agent
+spec:
+  selector:
+    matchLabels:
+      app: monitoring-agent
+  template:
+    metadata:
+      labels:
+        app: monitoring-agent
+    spec:
+      containers:
+      - name: monitoring-agent
+        image: monitoring-agent
+```
+
+```
+kubectl create -f daemon-set-definition.yaml
+```
+
+after v1.12
+
+
+
+## Static Pods
+
+> /etc/kubernetes/manifests/<pod-definition-name>.yaml
+
+자동으로 읽고 pod 생성/수정/삭제
+
+1. service
+  - --pod-manifest-path=/etc/kubernetes/manifest
+
+
+2. kubelet.service
+  - --config=<kubeconfig-name.yaml>   >   staticPodPath: /etc/kubernetes/manifest
+
+static pod 는 각각의 kubelet에 의해 생성됨
+
+kube-apiserver 에서는 read-only
+
+kubeadm 은 control-plane에 static pod 형태로 구성
+
+> ps -ef | grep kubelet     >     find "--config"
+
+
+## Multiple Scheduler
+
+
+### Custom Scheduler
+
+```yaml
+pod-scheduler-definition.yaml
+
+...
+spec:
+  containers:
+    - name:
+      image:
+  schedulerName: my-custom-scheduler
+```
+
+```
+kubectl get events
+```
+
+
+
+
+
+
+
+
+
 
 
 
