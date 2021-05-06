@@ -7,7 +7,7 @@ categories:
 tags:
   - kubernetes
 permalink:
-date: 2021-05-05
+
 last_modified_at: 2021-05-05
 ---
 
@@ -69,6 +69,25 @@ systemctl restart kubelet
 
 
 ## Backup and restore methodologies
+
+### ETCD - etcdctl
+
+> stored in Control
+
+ETCD Cluster
+```
+etcdctl snapshot save <snapshot-name.db>
+
+service kube-apiserver stop
+
+etcdctl snapshot restore <snapshot-name.db> --data-dir /var/lib/etcd-from-backup
+
+systemctl deamon-reload
+service etcd restart
+```
+
+
+
 
 
 .
