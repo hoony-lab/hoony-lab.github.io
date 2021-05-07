@@ -346,6 +346,42 @@ kubectl auth can-i delete nodes --as dev-user
 
 ## Images Securely
 
+```yaml
+
+...
+spec:
+  containers:
+    - name:
+      image: docker.io/nginx/nginx
+```
+
+### Private Repository
+
+```yaml
+
+...
+spec:
+  containers:
+    - name:
+      image: private-registry.io/apps/internal-app
+```
+
+## Security Context
+
+```yaml
+**pod-security-context-definition.yaml**
+
+...
+spec:
+  conatiners:
+    - name:
+      image:
+      command:
+        securityContext:          (supported at the container level)
+          runAsUser: 1000
+          capabilities:
+            add: ["MAC_ADMIN"]
+```
 
 ## Network Policies
 
