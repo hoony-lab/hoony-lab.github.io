@@ -385,5 +385,44 @@ spec:
 
 ## Network Policies
 
+### Ingress & Egress
+
+> All Allow (default)
+
+web pod -- api pod -- db pod
+1. web pod
+  - allow ingress traffic from user on port 80
+2. api pod
+3. db pod
+  - allow ingress traffic from api pod on port 3306
+
+
+```yaml
+**network-policy-definition.yaml**
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+    policyTypes:
+      - Ingress
+    ingress:
+      - from:
+        - podSelector:
+            matchLabels:
+              role: api-pod
+        ports:
+          - protocol: TCP
+            port: 3306
+```
+
+support network policies : Kube-router, Calico, Romana, Weave-net  
+NOT support network policies : Flannel
+
+
 
 .
