@@ -15,7 +15,7 @@ permalink:
 
 ---
 
-## HAProxy ?
+## HAProxy
 
 - The Reliable, High Performance TCP/HTTP Load Balancer **(Open Source)**
 
@@ -30,7 +30,7 @@ An HAProxy configuration file guides the behavior of your HAProxy load balancer.
 
 HAProxy 설정은 네 개의 필수 섹션을 포함하는 기본 설정 파일로 만들 수 있다.
 
-```
+```bash
 **haproxy.cfg** (default)
 
 global
@@ -52,7 +52,7 @@ backend
 ...
 ```
 
-```
+```bash
 **haproxy.cfg** (examples)
 
 global
@@ -173,7 +173,7 @@ Typically, you will use port 443, which signifies the HTTPS protocol:
 
   - 통합 인증서 사용시에 유용 할 듯
 
-  ```
+  ```bash
   frontend www
      bind :443 ssl crt /etc/hapee-2.3/certs/ssl.pem
      default_backend webservers
@@ -183,7 +183,7 @@ Typically, you will use port 443, which signifies the HTTPS protocol:
 
   - 인증서가 여러개일 때 유용할  
 
-  ```
+  ```bash
   frontend www
      bind :443 ssl crt /etc/hapee-2.3/certs
      default_backend webservers
@@ -197,7 +197,7 @@ Typically, you will use port 443, which signifies the HTTPS protocol:
 
 - 기존 배포 환경 haproxy.config의 설정은 위 2번의 'certifacte를 **디렉토리**로 지정' 이기 때문에 최대한 수정을 덜 하는 쪽으로 진행.
 
-```
+```bash
 # 0-1. 인증서 통합 및 정상 동작 확인
 
 # 0-2. inception에 certificate 파일 복사
