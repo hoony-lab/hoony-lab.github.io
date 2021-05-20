@@ -31,14 +31,14 @@ An HAProxy configuration file guides the behavior of your HAProxy load balancer.
 HAProxy 설정은 네 개의 필수 섹션을 포함하는 기본 설정 파일로 만들 수 있다.
 
 ```
-**haproxy.cfg**
+**haproxy.cfg** (default)
 
 global
     # process-level settings here
     # 구성의 맨 위에 있어야 함
 
 defaults
-    # defaults here
+    # All sections bellow will inherit the settings defined here
     # 다음 frontend, backend, listen 섹션의 기본값
 
 frontend
@@ -49,13 +49,11 @@ backend
     # servers that fulfill the requests
     # HAProxy Enterprise가 트래픽을 전달하는 서버 풀
 
-listen
-    # A listen section combines the functions of frontend and backend
-    # 프론트 엔드와 백엔드의 기능을 결합
+...
 ```
 
 ```
-**haproxy.cfg**
+**haproxy.cfg** (examples)
 
 global
     # Bind the Runtime API to a UNIX domain socket and/or an IP address
@@ -81,8 +79,10 @@ global
     module-path /opt/hapee-2.3/modules
 
 defaults
-    # defaults here
-    # 다음 frontend, backend, listen 섹션의 기본값
+    mode http
+    log global
+    balance roundrobin
+    timeout client
 
 frontend www.example.com
     mode http
@@ -95,14 +95,14 @@ frontend www.example.com
     default_backend web_servers
 
 frontend foo.com
-   mode http
-   bind 192.168.1.5:80
-   default_backend foo_servers
+    mode http
+    bind 192.168.1.5:80
+    default_backend foo_servers
 
 frontend db.foo.com
-   mode tcp
-   bind 192.168.1.15:3306
-   default_backend db_servers
+    mode tcp
+    bind 192.168.1.15:3306
+    default_backend db_servers
 
 
 
@@ -118,22 +118,22 @@ backend www.example2.com
     server s3 192.168.1.27:8080 check
 
 frontend foo_and_bar
-   mode http
-   bind 192.168.1.5:80
-   use_backend foo_servers if { req.hdr(host) -i foo.com }
-   use_backend bar_servers if { req.hdr(host) -i bar.com  }
+    mode http
+    bind 192.168.1.5:80
+    use_backend foo_servers if { req.hdr(host) -i foo.com }
+    use_backend bar_servers if { req.hdr(host) -i bar.com  }
 
 backend foo_servers
-   mode http
-   server s1 192.168.1.25:80
-   server s2 192.168.1.26:80
-   server s3 192.168.1.27:80
+    mode http
+    server s1 192.168.1.25:80
+    server s2 192.168.1.26:80
+    server s3 192.168.1.27:80
 
 backend bar_servers
-   mode http
-   server s1 192.168.1.35:80
-   server s2 192.168.1.36:80
-   server s3 192.168.1.37:80
+    mode http
+    server s1 192.168.1.35:80
+    server s2 192.168.1.36:80
+    server s3 192.168.1.37:80
 
 listen fe_main
     # frontend configuration settings
@@ -154,9 +154,74 @@ listen fe_main
 
 
 
+### TLS
+
+HAProxy Enterprise supports Transport Layer Security (TLS) for encrypting traffic between itself and clients. You have the option of using or not using TLS between HAProxy Enterprise and your backend servers, if you require end-to-end encryption.
+
+#### Enable TLS to clients
+To configure TLS between the load balancer and clients, you must:
+
+- add the ssl parameter to a bind line in a frontend section;
+
+- add the crt parameter that points to a .pem file that contains your PEM formatted TLS certificate and key.
+
+Typically, you will use port 443, which signifies the HTTPS protocol:
+
+
+
+1. certificate를 특정 **파일**로 지정
+
+  - 통합 인증서 사용시에 유용 할 듯
+
+  ```
+  frontend www
+     bind :443 ssl crt /etc/hapee-2.3/certs/ssl.pem
+     default_backend webservers
+  ```
+
+2. certifacte를 **디렉토리**로 지정
+
+  - 인증서가 여러개일 때 유용할  
+
+  ```
+  frontend www
+     bind :443 ssl crt /etc/hapee-2.3/certs
+     default_backend webservers
+  ```
+
+
+## 통합 인증서를 bosh의 HAProxy instance로 옮겨서 SSL certificate 적용
+
+
+**sample script**
+
+- 기존 배포 환경 haproxy.config의 설정은 위 2번의 'certifacte를 **디렉토리**로 지정' 이기 때문에 최대한 수정을 덜 하는 쪽으로 진행.
+
+```
+# 0-1. 인증서 통합 및 정상 동작 확인
+
+# 0-2. inception에 certificate 파일 복사
+
+# 1. haproxy instance에 인증서 복사
+bosh -d <deploy-name> scp <my-cert>.pem haproxy:/var/tmp/
+
+# 2. haproxy instance 접속
+bosh ssh -d <deploy-name> haproxy
+sudo su
+
+# 3. haproxy instance로 인증서 이동 및 인증서 권한 변경
+cd /var/tmp
+chown vcap:vcap <my-cert>.pem
+mv /var/tmp/<my-cert>.pem /var/vcap/jobs/haproxy/config/ssl
+
+# 4. haproxy 프로세스 재시작
+monit stop haproxy
+monit start haproxy
+```
+
 -----
 
 > https://en.wikipedia.org/wiki/HAProxy  
 > https://www.haproxy.com/documentation/hapee/latest/  
 > https://www.haproxy.com/documentation/hapee/latest/configuration/config-sections/overview/  
-> https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration/  
+> https://www.haproxy.com/documentation/hapee/latest/security/tls/
