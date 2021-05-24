@@ -406,6 +406,12 @@ roleRef:
 kubectl create -f cluster-admin-role-binding.yaml
 ```
 
+```bash
+kubectl get clusterroles
+kubectl get clusterrolebindings
+kubectl describe clusterrole cluster-administrator
+kubectl describe clusterrolebinding cluster-admin-role-binding
+```
 
 ## Images Securely
 
