@@ -98,7 +98,7 @@ CA (certificate authority): public/private key keeper
 how to generate for the cluster
 
 
-```
+```bash
 **CA**
 
 // Generate Keys
@@ -116,7 +116,7 @@ openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
 //now CA has ca.key/ca.csr/ca.crt
 ```
 
-```
+```bash
 **Admin user**
 
 // Generate Keys
@@ -134,13 +134,13 @@ openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
 //now SYSTEM:MASTERS group has admin.key/admin.csr/admin.crt
 ```
 
-```
+```bash
 curl https://kube-apiserver:6443/api/v1/pods \
     --key admin.key --cert admin.crt \
     --cacert ca.crt
 ```
 
-```
+```bash
 docker ps -a
 docker logs <container-id>
 ```
@@ -208,30 +208,32 @@ $HOME/.kube/config
 Config files contains 3 types
 
 1. Clusters
-  - Dev
-  - Prod
-  - Google
+    - Dev
+    - Prod
+    - Google
+
   ```
   --server <some-url>:<port>
   ```
 
 2. Contexts
-  - admin@Prod
-  - dev@Google
+    - admin@Prod
+    - dev@Google
 
 3. Users
-  - admin
-  - dev
-  - prod
-  ```
-  --client
-  --client
-  --so,ethid
-  ```
+    - admin
+    - dev
+    - prod
+
+```
+--client
+--client
+--so,ethid
+```
 
 
 ```yaml
-kubeconfig-deifinition.yaml
+# kubeconfig-deifinition.yaml
 
 apiVersion: v1
 kind: Config
@@ -276,7 +278,7 @@ kubectl config view --kubeconfig=<>
 ```
 curl https://kube-master:6443/version
 curl https://kube-master:6443/api/v1/pods
-curl https://kube-master:6443 -k
+curl https://kube-master:6443 -k    # list available api groups
 ```
 
 ### Authorization
@@ -302,10 +304,10 @@ AlwaysDeny
 #### RBAC
 
 ```yaml
-developer-role-definition.yaml
+# developer-role-definition.yaml
 
 apiVersion: rbac.authroization.k8s.io/v1
-kind: role
+kind: Role
 metadata:
   name: developer
 rules:
@@ -313,20 +315,29 @@ rules:
     resources: ["pods"]
     verbs: ["list", "get", "create", "update", "delete"]
     resourceNames: ["blue", "orange"]
-  - apiGroups:
-    resources:
-    verbs:
+  - apiGroups: [""]
+    resources: ["ConfigMap"]
+    verbs: ["Create"]
 ```
 
 ```yaml
-apiVersion:
+# devuser-developer-binding.yaml
+
+apiVersion: rbac.authorazation.k8s.io/v1
 kind: RoleBinding
 metadata:
-rules:
-
+  name: devsuser-developler-binding
+subjects:
+  - kind: user
+    name: dev-user
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
 ```
 
-```
+```bash
 kubectl create -f dev-user-developer-binding.yaml
 
 kubectl get roles
@@ -335,8 +346,9 @@ kubectl describe role developer
 kubectl describe rolebinding dev-user-devloperuser-binding
 ```
 
-```
-//check access
+```bash
+# check access
+
 kubectl auth can-i create deployments
 kubectl auth can-i delete nodes
 
@@ -344,9 +356,61 @@ kubectl auth can-i create deployments --as dev-user
 kubectl auth can-i delete nodes --as dev-user
 ```
 
+### Role Bindings and Cluster Roles
+
+> resources are categorized as either namespace or cluster
+
+#### Role Bindings (Namespaced)
+
+> Role, RoleBinding, PVC, pods, deployments ...
+
+#### Cluster Roles (Cluster scoped)
+
+> ClusterRole, ClusterRoleBinding, PV, namespaces, nodes ...
+
+```yaml
+# cluster-admin-role.yaml
+
+apiVersion: rbac.authorazation.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-administrator
+rules:
+  - apiGroups: [""]
+    resources: [""]
+    verbs: ["list", "get", "create", "delete"]
+```
+
+```bash
+kubectl create -f cluster-admin-role.yaml
+```
+
+```yaml
+# cluster-admin-role-binding.yaml
+
+apiVersion: rbac.authorazation.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-admin-role-binding
+subjects:
+  - kind: User
+    name: cluster-admin
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-administrator
+  apiGroup: rbac.authorization.k8s.io
+```
+
+```
+kubectl create -f cluster-admin-role-binding.yaml
+```
+
+
 ## Images Securely
 
 ```yaml
+# some-definition.yaml
 
 ...
 spec:
@@ -358,6 +422,7 @@ spec:
 ### Private Repository
 
 ```yaml
+# some-definition.yaml
 
 ...
 spec:
