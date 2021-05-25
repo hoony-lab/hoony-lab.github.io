@@ -444,15 +444,24 @@ spec:
 
 ...
 spec:
+  securityContext:
+    runAsUser: 1000
   conatiners:
     - name:
       image:
       command:
-        securityContext:          (supported at the container level)
-          runAsUser: 1000
-          capabilities:
-            add: ["MAC_ADMIN"]
+        - sleep
+        - "4800"
+      securityContext:
+        runAsUser: 1002
+        capabilities:
+          add: ["MAC_ADMIN"]
 ```
+
+```bash
+kubectl exec -it ubuntu-sleeper -- date -s '19 APR 2012 11:14:00'
+```
+
 
 ## Network Policies
 
@@ -460,16 +469,21 @@ spec:
 
 > All Allow (default)
 
-web pod -- api pod -- db pod
+web pod <--> api pod <--> db pod
 1. web pod
-  - allow ingress traffic from user on port 80
+    - allow ingress traffic from user on port 80
+
 2. api pod
+    - allow egress traffic from user on port 80
+    - allow ingress traffic from user on port 5000
+
 3. db pod
-  - allow ingress traffic from api pod on port 3306
+    - allow egress traffic from user on port 5000
+    - allow ingress traffic from api pod on port 3306
 
 
 ```yaml
-**network-policy-definition.yaml**
+**network-policy-ingress-definition.yaml**
 
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -483,12 +497,50 @@ spec:
       - Ingress
     ingress:
       - from:
+        #===================== like an AND operations
+        - podSelector:
+            matchLabels:
+              role: api-pod
+        - namespaceSelector:
+            matchLabels:
+              role: prod
+        #=====================
+        - ipBlock:
+            cidr: 192.168.5.10/32
+        ports:
+          - protocol: TCP
+            port: 3306
+```
+
+```yaml
+**network-policy-ingress-egress-definition.yaml**
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+    policyTypes:
+      - Ingress
+      - Egress
+    ingress:
+      - from:
         - podSelector:
             matchLabels:
               role: api-pod
         ports:
           - protocol: TCP
             port: 3306
+    egress:
+      - to:
+        - ipBlock:
+            cider: 192.168.5.10/32
+        ports:
+          - protocol: TCP
+            port: 80
 ```
 
 support network policies : Kube-router, Calico, Romana, Weave-net  
