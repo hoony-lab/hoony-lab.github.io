@@ -1,5 +1,5 @@
 ---
-title: Kubernetes - Security
+title: Kubernetes - Storage
 description:
 search: false
 categories:
