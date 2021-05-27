@@ -1,6 +1,6 @@
 ---
 title: Kubernetes - Kube API Server
-search: false
+search: true
 categories:
   - kubernetes
 tags:
