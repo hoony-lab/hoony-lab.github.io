@@ -1,5 +1,5 @@
 ---
-title: PaaS-TA - Troubleshooting: Dashboard
+title: PaaS-TA - Troubleshooting Dashboard
 description:
 search: true
 categories:
