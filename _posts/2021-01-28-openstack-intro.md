@@ -1,6 +1,6 @@
 ---
 title:  Openstack 이란?
-search: false
+search: true
 categories:
   - IT
 tags:
