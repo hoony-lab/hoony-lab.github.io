@@ -1,6 +1,6 @@
 ---
 title: Kubernetes - ETCD
-search: false
+search: true
 categories:
   - kubernetes
 tags:
