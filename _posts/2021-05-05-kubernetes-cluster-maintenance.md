@@ -1,7 +1,7 @@
 ---
 title: Kubernetes - Cluster Maintenance
 description:
-search: false
+search: true
 categories:
   - kubernetes
 tags:
