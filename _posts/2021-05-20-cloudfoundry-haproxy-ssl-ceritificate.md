@@ -1,7 +1,7 @@
 ---
 title: CloudFoundry - HAProxy SSL ceritificate
 description:
-search: false
+search: true
 categories:
   - cloudfoundry
 tags:
