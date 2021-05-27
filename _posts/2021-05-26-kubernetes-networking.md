@@ -210,6 +210,20 @@ netstat -pInt
 
 ## CNI in Kubernetes
 
+IPAM = IP Address Management
+
+### CNI - weaveworks
+
+Weave and Weave peers can be deployed as Deamonset on each nodes
+
+```
+kubectl apply -f \
+  "https://cloud.weave.works/k8s/net?k8s-version=\
+  $(kubectl version | base64 | tr -d '\n')"
+
+kubectl get pods -n kube-system
+kubectl logs weave-net-xxxxx weave -n kube-system
+```
 
 
 ## Network Loadbalancer
