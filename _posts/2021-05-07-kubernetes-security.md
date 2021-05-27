@@ -1,7 +1,7 @@
 ---
 title: Kubernetes - Security
 description:
-search: false
+search: true
 categories:
   - kubernetes
 tags:
