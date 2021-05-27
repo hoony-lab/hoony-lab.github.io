@@ -1,7 +1,7 @@
 ---
 title: Kubernetes - Storage
 description:
-search: false
+search: true
 categories:
   - kubernetes
 tags:
