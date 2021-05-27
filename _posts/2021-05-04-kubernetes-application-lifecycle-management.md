@@ -1,7 +1,7 @@
 ---
 title: Kubernetes - Application Lifecycle Management
 description:
-search: false
+search: true
 categories:
   - kubernetes
 tags:
