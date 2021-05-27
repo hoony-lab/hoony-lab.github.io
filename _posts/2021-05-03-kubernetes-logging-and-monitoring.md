@@ -1,7 +1,7 @@
 ---
 title: Kubernetes - Logging and Monitoring
 description:
-search: false
+search: true
 categories:
   - kubernetes
 tags:
