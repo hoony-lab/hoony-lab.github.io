@@ -1,7 +1,7 @@
 ---
 title: this is title
 description: this is description
-search: false
+search: true
 categories:
   - pages
 tags:
