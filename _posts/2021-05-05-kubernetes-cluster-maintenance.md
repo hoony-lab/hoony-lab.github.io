@@ -24,10 +24,10 @@ kubectl uncordon <node-name>
 
 ### Kubernetes Software Versions
 
-v1.11.3
-<major>.<minor>.<patch>
+`v1.11.3`
+`<major>.<minor>.<patch>`
 
-July 2015 v1.0
+`July 2015 v1.0`
 
 
 ## Operating System upgrades
@@ -38,7 +38,6 @@ kubelet, kube-proxy
 
 버젼은 세개씩 supported
 버젼업은 한단계씩 하는걸 recommended
-
 
 1. upgrade control node
   - cannot modify, new pod deploy,
@@ -75,12 +74,14 @@ systemctl restart kubelet
 > stored in Control
 
 ETCD Cluster
+
 ```
 etcdctl snapshot save <snapshot-name.db>
 
 service kube-apiserver stop
 
-etcdctl snapshot restore <snapshot-name.db> --data-dir /var/lib/etcd-from-backup
+etcdctl snapshot restore <snapshot-name.db> \
+  --data-dir /var/lib/etcd-from-backup
 
 systemctl deamon-reload
 service etcd restart
