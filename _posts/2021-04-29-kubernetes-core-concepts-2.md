@@ -1,7 +1,7 @@
 ---
 title: Kubernetes - Core Concepts 2
 description:
-search: false
+search: true
 categories:
   - kubernetes
 tags:
