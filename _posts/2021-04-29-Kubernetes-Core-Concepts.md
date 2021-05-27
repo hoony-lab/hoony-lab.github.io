@@ -1,7 +1,7 @@
 ---
 title: Kubernetes - Cluster Architecture
 description:
-search: false
+search: true
 categories:
   - kubernetes
 tags:
