@@ -1,7 +1,7 @@
 ---
 title: Kubernetes - Networking
 description:
-search: false
+search: true
 categories:
   - kubernetes
 tags:
