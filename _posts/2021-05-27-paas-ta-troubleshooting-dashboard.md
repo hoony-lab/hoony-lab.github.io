@@ -75,12 +75,12 @@ tail -f <db-process-or-job>.stderr.log
 tail -f <db-process-or-job>.stdout.log
 ```
 
-db 로그를 살펴보니, 1초에 여러 건의 쿼리 요청이 수십분 동안 지속되고 있다. `stdout` 로그의 마지막 수정시간이 한시간인데, `stderr` 로그의 마지막 수정시간은 현재 시간(`date`)이다. 에러만 나오고 정상적적인 output이 없다는 것이다.
+db 로그를 살펴보니, 1초에 여러 건의 쿼리 요청이 수십분 동안 지속되고 있다. `stdout` 로그의 마지막 수정시간이 한시간인데, `stderr` 로그의 마지막 수정시간은 현재 시간(`date`)이다. 에러만 나오고 정상적인 output이 없다는 것이다.
 
   - 누군가의 무차별 대입 공격(Brute Force attack) 인가?
   - 누군가의 무한한 로그인 시도 및 새로고침 인가 ?  
 
-어떤 request에 의해서 db에 병목현상이 일어나는 것은 분명하다.
+어떤 request에 의해서 db에 병목현상이 일어나는 것은 분명하다. process를 재시작하고 다시 확인한다.
 
   - `process` 재시작
     - `monit restart <process-name>`
