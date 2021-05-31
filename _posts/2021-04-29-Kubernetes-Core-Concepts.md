@@ -10,6 +10,7 @@ permalink:
 
 last_modified_at: 2021-04-29
 ---
+
 # {{ page.title }}
 
 > 배를 활용한 이해
@@ -19,17 +20,16 @@ last_modified_at: 2021-04-29
 > 컨테이너의 형태로 쉽게 배포, 쉽게 다른 앱들과 소통
 - 이를 가능하게 하기위해 여러가지 구성이 필요
 
--
-#### Control Plane (Master Node)
+### Control Plane (Master Node)
 > 화물선을 모니터링하고 관리하는 컨트롤선
 
 
-###### ETCD
+#### ETCD
 - Key-Value Store format database
 
 다른배 어떤컨테이너가 어떤배애, 어떤시간에 세워졌는지,
 
-###### Kube Scheduler
+#### Kube Scheduler
 > 크레인으로 컨트롤선에서 컨테이너를 이동
 
 - 적절한 화물선에 적절한 컨테이너를 결정
@@ -56,7 +56,7 @@ last_modified_at: 2021-04-29
 3. from running process
 ps -aux | grep kube-scheduler
 
-###### Controller Managers
+#### Controller Managers
 - Node Controller, Replication Controller, etc.
 
 컨테이너가 부셔졌는지, 부셔졌으면 새로운 컨테이너 전달
@@ -82,7 +82,7 @@ replica들 health-check, 5분 죽었다면 새로운 pod 생성
 
 컨테이너가 부셔졌는지, 부셔졌으면 새로운 컨테이너 전달
 
-###### Kube-API Server
+#### Kube-API Server
 orchestrating all operations within the cluster
 
 pod을 만든다고 가정하면
@@ -100,13 +100,13 @@ kubeadm > kube-apiserver-master pod
 /etc/systemd/system/kube-apiserver.service
 ```
 
-#### Worker Node
+### Worker Node
 > 컨테이너를 실을 수 있는 화물선
 
 DNS Service networking solution >> can "container runtime engine" == docker
 ContainerD, Rocket
 
-###### Kubelet
+#### Kubelet
 > 화물선의 선장
 
 - 컨트롤 선과의 소통
@@ -121,7 +121,7 @@ monitor node & pod
 > kubeadm doesn't deploy kubelet automatically
 
 
-###### Kube Proxy
+#### Kube Proxy
 
 web 컨테이너하나 db 컨테이너 하나 > kube-proxy로 소통
 
@@ -146,7 +146,7 @@ IP tables rule 생성
 
 
 
-#### PODs
+## PODs
 
 Kubernetes는 docker hub 같은 곳에서 Image를 pull 하여 컨테이너 생성
 
@@ -208,7 +208,7 @@ kubectl describe pod myapp-pod
 ```
 
 
-#### DEMO
+### DEMO
 ```
 kubectl apply -f pod-definition.yml
 kubectl get po -o wide
@@ -462,9 +462,9 @@ curl http://192/169.1.2:30008
 
 Service Types
 1. NodePort : TargetPort on pod > Port on Service > NodePort on node
-  - TargetPort : pod 10.244.0.2:80
-  - Port : 10.106.1.12:80
-  - NodePort : 30000 ~ 32767
+    - TargetPort : pod 10.244.0.2:80
+    - Port : 10.106.1.12:80
+    - NodePort : 30000 ~ 32767
 
 **pod-definition.yml**
 ```yaml
@@ -541,15 +541,16 @@ spec:
 3. LoadBalancer
 
 voting-app in 3 pods in 1 deployment
-- node 1
-- node 2
+  - node 1
+  - node 2
 
 http://example-vote.com
 
 
 result-app 3 pods in 1 deployment
-- node 3
-- node 4  
+  - node 3
+  - node 4  
+
   http://example-result.com
 
 
@@ -571,41 +572,39 @@ spec:
   selector:
     app: myapp
     type: back-end
-
 ```
 
 
 
 > ## Imperative vs Declarative
-1. Imperative (명령)
-  - selects each steps
-    - provision VM  
-    - install nginxedit config port 8080  
-    - edit config web path  
-  ```
-  kubectl run --image=nginx nginx
-  kubectl create deployment --image=nginx nginx
-  kubectl expose pod nginx --port 80
-  kubectl expose deployment nginx --port 80
-  kubectl scale deployment nginx --replicas=5
-  kubectl set image deployment nginx nginx=nginx:1.18
-  kubectl create/replace/delete -f nginx.yaml
-  kubectl run nginx --image=nginx --dry-run=client -o yaml > some_yaml.yaml
-  ```
-
-  ```
-  kubectl edit deployment nginx
-  kubectl replace -f nginx.yaml
-  kubectl replace --force -f nginx.yaml
-  ```
-2. Declarative (manifest.yaml)
-  VM name: web  
-  Database: nginx  
-  Port: 8080  
-  Path: /var/www/nginx  
-  Code: GIT Repo - X  
-```
-kubectl apply -f nginx.yaml     (nginx.yaml.isempty() ? create : update)
-```
-> ## Kubectl apply
-asd
+> 1. Imperative (명령)
+>  - selects each steps
+>    - provision VM  
+>    - install nginxedit config port 8080  
+>    - edit config web path  
+>  ```
+>  kubectl run --image=nginx nginx
+>  kubectl create deployment --image=nginx nginx
+>  kubectl expose pod nginx --port 80
+>  kubectl expose deployment nginx --port 80
+>  kubectl scale deployment nginx --replicas=5
+>  kubectl set image deployment nginx nginx=nginx:1.18
+>  kubectl create/replace/delete -f nginx.yaml
+>  kubectl run nginx --image=nginx --dry-run=client -o yaml > foo.yaml
+>  ```
+>  ```
+>  kubectl edit deployment nginx
+>  kubectl replace -f nginx.yaml
+>  kubectl replace --force -f nginx.yaml
+>  ```
+>
+>  2. Declarative (manifest.yaml)
+>    VM name: web  
+>    Database: nginx  
+>    Port: 8080  
+>    Path: /var/www/nginx  
+>    Code: GIT Repo - X  
+>
+>  ```
+>  kubectl apply -f nginx.yaml     (nginx.yaml.isempty() ? create : update)
+>  ```
