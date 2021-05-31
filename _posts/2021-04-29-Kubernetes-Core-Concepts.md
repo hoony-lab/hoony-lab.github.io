@@ -6,8 +6,8 @@ categories:
   - kubernetes
 tags:
   - kubernetes
-permalink: /kubernetes/kubernetes-core-concepts
-date: 2021-04-29
+permalink:
+
 last_modified_at: 2021-04-29
 ---
 # {{ page.title }}
@@ -359,9 +359,8 @@ production이 커지면 namespace도 구분을 잘해야ㅐ한다
 - web-pod
 - db-service
 
-db-service.dev.svc.cluster.local
-<service-name>.<namespace>.<service>.<domain>.<domain>
-
+`db-service.dev.svc.cluster.local`
+`<service-name>.<namespace>.<service>.<domain>.<domain>`
 
 각각의 policy
 - quota 설정
@@ -593,6 +592,7 @@ spec:
   kubectl create/replace/delete -f nginx.yaml
   kubectl run nginx --image=nginx --dry-run=client -o yaml > some_yaml.yaml
   ```
+
   ```
   kubectl edit deployment nginx
   kubectl replace -f nginx.yaml
