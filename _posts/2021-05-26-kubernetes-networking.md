@@ -225,12 +225,164 @@ kubectl get pods -n kube-system
 kubectl logs weave-net-xxxxx weave -n kube-system
 ```
 
-
 ## Network Loadbalancer
+?
 
+## DNS in k8s
+?
 
+### CoreDNS in k8s
+
+```shell
+# pod1
+cat >> /etc/hosts
+
+# pod2
+cat >> /etc/hosts
+
+# pod3
+cat >> /etc/hosts
+```
+
+```shell
+# pod1
+cat >> /etc/resolv.conf
+
+# pod2
+cat >> /etc/resolv.conf
+
+# pod3
+cat >> /etc/resolv.conf
+```
+
+```shell
+cat /etc/coredns/Corefile
+
+```
 
 ## Ingress
+
+> based on the URL path, SSL security
+
+
+Service vs Ingress (?)
+
+
+```
+www.my-online-store.com
+
+80 >> (proxy-server) >> 38080
+
+http://<node-ip>:38080
+app-service (NodePort) (LoadBalancer(GCP))
+app-pod
+
+mysql-service (ClusterIP)
+mysql-pod
+```
+
+```
+www.my-online-store.com
+
+80 >> (proxy-server) >> 38080
+
+another LB
+
+http://<node-ip>:38080
+app-service (NodePort) (LoadBalancer(GCP))
+app-pods
+
+http://<node-ip>:38282
+video-service (NodePort) (LoadBalancer(GCP))
+video-pods
+
+mysql-service (ClusterIP)
+mysql-pod
+```
+
+Service들을 Ingress로 묶을 수 있음
+
+reverse-proxy (nginx, haproxy) 같은걸로 Ingress 대체 가능
+
+### Ingress Controller
+
+GCE, nginx, HAProxy, Contour, Traefik, Istio
+
+```yaml
+# ingress-controller-definition.yaml
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: nginx-ingress
+  templace:
+    metadata:
+
+
+
+      args:
+
+      env:
+
+      ports:
+```
+
+```yaml
+kind: Service
+spec:
+  type: NodePort
+  ports:
+    - port:
+
+    - port:
+
+```
+
+```yaml
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-configuration
+```
+
+Auth
+```yaml
+gd
+```
+
+
+
+```yaml
+# ingress-wear.yaml
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-wear
+spec:
+  backend:
+    serviceName: wear-service
+    servicePort: 80
+```
+
+```shell
+kubectl create -f ingress-wear.yaml
+kubectl get ingress
+```
+
+
+
+### Ingress Resources
+
+
+
+
+
 
 
 .
