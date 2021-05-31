@@ -5,7 +5,8 @@ categories:
   - kubernetes
 tags:
   - kubernetes
-permalink: /pages
+permalink:
+
 last_modified:
 ---
 
