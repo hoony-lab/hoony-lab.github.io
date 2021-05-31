@@ -1,5 +1,5 @@
 ---
-title: Kubernetes - Cluster Architecture
+title: Kubernetes - Core Concepts
 description:
 search: true
 categories:
