@@ -16,7 +16,6 @@ last_modified_at: 2021-04-29
 > 배를 활용한 이해
 
 ## Kubernetes Architecture
-
 > 컨테이너의 형태로 쉽게 배포, 쉽게 다른 앱들과 소통
 - 이를 가능하게 하기위해 여러가지 구성이 필요
 
@@ -87,7 +86,7 @@ orchestrating all operations within the cluster
 
 pod을 만든다고 가정하면
 authenticate Clustervalidate request
-retrieve date
+retrieve data
 update etcd
 kube-scheduler가 어떤 화물선에 컨테이너가 올라가야할지 kube-api 한테 알려줌
 화물선의 kubelet 이 받고 container 생성
@@ -156,9 +155,9 @@ pod = single instance of application
 traffic 이 늘어나서 scale을 할 때 Pod를 추가 생성 (Pod 안에 컨테이너를 추가 생성 하는게 아님)
 
 
-> ###### Multi-Container PODs (side-car pattern)
-웹app을 위한 helper-container가 있다면 1개의 Pod 안에 여러 Container가 있을 수 있음
-pod는 1개의 pod 안에 있는 container 들에게 shared volume 제공
+>  Multi-Container PODs (side-car pattern)
+> - 웹app을 위한 helper-container가 있다면 1개의 Pod 안에 여러 Container가 있을 수 있음
+> - pod는 1개의 pod 안에 있는 container 들에게 shared volume 제공
 
 
 ```
@@ -168,10 +167,8 @@ kubectl get pod
 kubectl get po
 ```
 
-pod만 가지고서는 external user 접근 불가능
+**pod만 가지고서는 external user 접근 불가능**
 
-_____
------
 
 ## PODs with YAML
 > yaml은 indent(2칸, 4칸)를 잘 해야함
@@ -460,11 +457,14 @@ service - port 30008
 curl http://192/169.1.2:30008
 ```
 
-Service Types
-1. NodePort : TargetPort on pod > Port on Service > NodePort on node
-    - TargetPort : pod 10.244.0.2:80
-    - Port : 10.106.1.12:80
-    - NodePort : 30000 ~ 32767
+### Service Types
+
+#### NodePort
+> TargetPort on pod > Port on Service > NodePort on node
+
+- TargetPort : pod 10.244.0.2:80
+- Port : 10.106.1.12:80
+- NodePort : 30000 ~ 32767
 
 **pod-definition.yml**
 ```yaml
@@ -505,9 +505,9 @@ curl http://192.168.0.4:30008
 모두 같은 service를 통하여 라벨링된 앱으로 traffic 전달
 
 
-2. ClusterIP
+#### ClusterIP
 
-FE > BE > redis
+> FE > BE > redis
 
 pod의 ip는 static 하지 않음
 single interface를 만들어 각 pod group에 접근해야함
@@ -519,8 +519,10 @@ labels:
   ** app: myapp **
 ```
 
-**service-clusterip-definition.yml**
+
 ```yaml
+# service-clusterip-definition.yml
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -533,32 +535,27 @@ spec:
   selector:
     app: myapp
     type: back-end
-
 ```
 
 
+#### LoadBalancer
 
-3. LoadBalancer
+> aws, azure, gcp (어떤 클라우드는 지원 안할 수도 있음)
 
-voting-app in 3 pods in 1 deployment
+voting-app in 3 pods in 1 deployment (http://example-vote.com)
   - node 1
   - node 2
 
-http://example-vote.com
-
-
-result-app 3 pods in 1 deployment
+result-app 3 pods in 1 deployment (http://example-result.com)
   - node 3
   - node 4  
 
-  http://example-result.com
 
-
-**service-loadbalancer-definition.yml**
-> aws, azure, gcp (어떤 클라우드는 지원 안할 수도 있음)
 
 
 ```yaml
+# service-loadbalancer-definition.yml
+
 apiVersion: v1
 kind: Service
 metadata:
