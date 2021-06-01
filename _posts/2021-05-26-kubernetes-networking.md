@@ -380,9 +380,11 @@ kubectl get ingress
 ### Ingress Resources
 
 
+**중요 (추후 추가 정리)**
 
-
-
+```yaml
+s
+```
 
 
 .
