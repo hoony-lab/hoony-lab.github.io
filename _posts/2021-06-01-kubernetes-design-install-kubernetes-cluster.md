@@ -14,6 +14,20 @@ last_modified_at: 2021-06-02
 
 ## Design a Kubernetes cluster
 
+- Purpose
+  - Edu
+    - Minikube
+    - Single node cluster w/ kubeadm/GCP/AWS
+  - Dev & Test
+    - Multi-node cluster w/ Single Master and Mulitple workers
+    - kubeadm/GCP/AWS/AKS
+  - Hosting Production Apps
+- Cloud or OnPrem
+- Workloads
+  - How many ?
+  - What kind ?
+
+
 
 ## Provision Infrastructure
 
