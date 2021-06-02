@@ -15,7 +15,7 @@ last_modified_at: 2021-06-02
 ## Design a Kubernetes cluster
 
 - Purpose
-  - Edu
+  - Education
     - Minikube
     - Single node cluster w/ kubeadm/GCP/AWS
   - Dev & Test
