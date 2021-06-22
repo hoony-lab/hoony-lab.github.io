@@ -30,7 +30,7 @@ last_modified_at: 2021-06-02
 - Cloud or OnPrem
   - Kubeadm for OnPrem
   - GKE for GCP
-  - Kops for AWS
+  - KOPS for AWS
   - AKS for Azure
 - Workloads
   - Storages
@@ -39,13 +39,39 @@ last_modified_at: 2021-06-02
     - minimum of 4 node cluster
     - Master vs Worker nodes
     - Linux X86_64 Arch.
-
-
   - How many ?
   - What kind ?
 
 
 ## Choose Kuberenetes Infrastrucure Config
+
+Linux
+- binary (O)
+- tools (O)
+
+Windows : Hyper-V, Virtualbox, ...
+- binary (X)
+- tools (O)
+
+Minikube
+- single node
+
+Kubeadm
+- multi node
+
+
+Turnkey Solutions : easy to deploy and manage a k8s cluster PRIVATELY
+- OpenShift
+- Cloud Foundry Container Runtime
+  - BOSH
+- VMware Cloud PKS
+- Vagrant
+
+Hosted Solutions
+- GKE (Google Container Engine)
+- AKS (Azure Kubernetes Service)
+- EKS (Amazon Elastic Continer Service for Kubernetes)
+- OpenShift Online
 
 
 ## Choose a Network Solution
@@ -53,6 +79,14 @@ last_modified_at: 2021-06-02
 
 ## HA Kubernetes Cluster
 
+> HA for avoid "single point of failure"
+
+API server : A-A
+split traffic between API server
+
+Scheduler : A-S (election)
+
+ETCD :
 
 ## Provision Infrastructure
 
