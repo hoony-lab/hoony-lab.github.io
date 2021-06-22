@@ -81,12 +81,33 @@ Hosted Solutions
 
 > HA for avoid "single point of failure"
 
-API server : A-A
+### API server : A-A
 split traffic between API server
 
-Scheduler : A-S (election)
+### Scheduler : A-S (election)
 
-ETCD :
+### ETCD
+
+Leader Election - RAFT
+
+Quorum = N/2 + 1
+
+recommended to have odd number of nodes
+
+### Install from the scratch
+https://www.youtube.com/watch?v=uUupRagM7m0&list=PL2We04F3Y_41jYdadX55fdJplDvgNGENo
+
+## Install with Kubeadm
+
+> https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+
+1. Control/Worker nodes (Provision VM)
+2. install docker on Control/Worker nodes
+3. install Kubeadm on Control node
+4. initilize Control node
+5. POD network in Control/Worker nodes
+6. join Worker node to Control node
+
 
 ## Provision Infrastructure
 
