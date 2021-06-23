@@ -94,5 +94,5 @@ openssl x509 -in /var/lib/kubelet/worker-1.cert -test
 
 ## JSONPATH
 https://mmumshad.github.io/json-path-quiz/index.html#!/?questions=questionskub1
-
+https://mmumshad.github.io/json-path-quiz/index.html#!/?questions=questionskub2
 .
