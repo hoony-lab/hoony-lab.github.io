@@ -129,8 +129,15 @@ https://www.youtube.com/watch?v=uUupRagM7m0&list=PL2We04F3Y_41jYdadX55fdJplDvgNG
 
 ## Node end-to-end tests
 
+End to End tests is **no longer part of the CKA exam**
+
+> https://www.youtube.com/watch?v=-ovJrIIED88&list=PL2We04F3Y_41jYdadX55fdJplDvgNGENo&index=18
 
 ## Run & Analyze end-to-end test
+
+End to End tests is **no longer part of the CKA exam**
+
+> https://www.youtube.com/watch?v=-ovJrIIED88&list=PL2We04F3Y_41jYdadX55fdJplDvgNGENo&index=18
 
 
 
