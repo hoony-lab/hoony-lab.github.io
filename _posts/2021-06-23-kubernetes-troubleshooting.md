@@ -86,7 +86,7 @@ sudo jornalctl -u kubelet
 
 ### Check Certificates
 ```
-openssl x509 -in /var/lib/kubelet/worker-1.cert -test
+openssl x509 -in /var/lib/kubelet/worker-1.cert -text
 ```
 
 ## Networking
