@@ -1,5 +1,5 @@
 ---
-title: Kubernetes - Troubleshooting
+title: Kubernetes - JSON Path
 description:
 search: true
 categories:
@@ -20,7 +20,7 @@ last_modified_at:
 `kubectl get endpoint`
 
 ### Check Service Status
-`kubectl describe service web-service` 
+`kubectl describe service web-service`
 
 ### Check POD
 ```
