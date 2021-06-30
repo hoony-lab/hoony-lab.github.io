@@ -26,7 +26,7 @@ last_modified_at:
 ```
 kubectl get pod
 kubectl describe pod web
-kubectl logs web -f --previous
+kubectl logs web -f --previous 
 ```
 
 ### Check Dependent Service/Apps
