@@ -279,9 +279,9 @@ defaults:
       path: ""
       type: posts
     values:
-      toc : true
+      toc: true
       toc_sticky: true
-      # classes: wide
+      #classes: wide
       layout: single
       show_date: true
       author_profile: true
