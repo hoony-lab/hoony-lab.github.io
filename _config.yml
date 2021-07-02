@@ -280,7 +280,7 @@ defaults:
       type: posts
     values:
       toc : true
-      classes: wide
+      # classes: wide
       layout: single
       show_date: true
       author_profile: true
@@ -289,6 +289,7 @@ defaults:
       share: true
       related: true
 
+  # _pages
   - scope:
       path: "_pages"
       type: pages
