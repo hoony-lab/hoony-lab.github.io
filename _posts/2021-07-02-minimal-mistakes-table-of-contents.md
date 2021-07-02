@@ -1,5 +1,5 @@
 ---
-title: [minimal-mistakes] TOC (table-of-contents)
+title: Minimal-Mistakes - TOC (table-of-contents)
 description:
 search: true
 categories:
