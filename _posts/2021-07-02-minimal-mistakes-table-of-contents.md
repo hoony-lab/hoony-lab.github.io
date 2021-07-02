@@ -19,7 +19,7 @@ TOC를 만들고, TOC를 sticky 하게 할 것인지 결정할 것이다.
 
 ## 각 Front Matter에 값 추가하기
 
-`toc: true`를 추가하고 `commit & push & reload` 하고 확인해보자.
+`toc: true`를 추가하고 `commit & push & reload` 하고 확인한다.
 
 ```yaml
 ---
@@ -35,7 +35,7 @@ toc: true
 
 `toc: true` 를 추가하고 `toc_sticky: true` 를 추가로 넣어주면 TOC가 둥둥 떠다녀서 스크롤해도 우측에 떠있게 된다. 참고로 `toc_sticky`의 default 값은 `false` 라고 한다.
 
-`toc_sticky: true`를 추가하고 `commit & push & reload` 하고 확인해보자.
+`toc_sticky: true`를 추가하고 `commit & push & reload` 하고 확인한다.
 
 ```yaml
 ---
@@ -49,7 +49,7 @@ toc_sticky: true
 
 ## 매 페이지마다 추가해야해 ?
 
-`_config.yaml` 에 우리는 매 포스팅의 설정값을 위한 `defaults` 를 설정했을 것이다. 매 포스팅 마다 `Front Matter`에 추가하지 말고, `_config.yaml` 하단 부분에 `toc: true` 와 `toc_sticky: true`를 추가해준다.
+`_config.yaml` 에 우리는 매 포스팅의 설정값을 위한 `defaults` 를 설정했을 것이다. 매 포스팅 마다 `Front Matter`에 추가하지 말고, `_config.yaml` 하단 부분에 적용하고 싶은 `scope`에 `toc: true` 와 `toc_sticky: true`를 추가한다.
 
 ```yaml
 defaults:
